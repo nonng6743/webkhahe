@@ -45,3 +45,12 @@ CREATE TABLE admins (
     role varchar(255) NOT NULL DEFAULT 'admin'
     ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+CREATE TABLE managers (
+	id_manager Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	fastname varchar(255) NOT NULL,
+    lastname varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
+    role varchar(255) NOT NULL DEFAULT 'manager'
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+

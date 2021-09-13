@@ -23,13 +23,14 @@
         </label>
     <label class="logo">Kheha K.6</label>
     <ul>
-        <li><a class="active" href="index.php">Home</a></li>
+        <li><a class="active" href="../../../projectweb/index.php">Home</a></li>
+        <li><a  href="../../../projectweb/admin/loginAdmin.php">สำหรับ Admin</a></li>
         <li><a  href="../../../projectweb/seller/signin.php">Seller Centre</a></li>
         <li><a  href="../../../projectweb/seller/signup.php">ขายสินค้ากับเรา</a></li>
         <?php
         if (!$id_user ){
-            echo "<li><a href='signin.php'>Login</a></li>";
-            echo "<li><a href='signup.php'>Signup</a></li>";
+            echo "<li><a href='../../../projectweb/signin.php'>Login</a></li>";
+            echo "<li><a href='../../../projectweb/signup.php'>Signup</a></li>";
         } elseif ($id_user){
             echo "<li><a href='logout.php' class='btn btn-danger'>Logout</a></li>";  
         }
