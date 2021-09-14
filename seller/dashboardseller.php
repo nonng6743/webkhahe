@@ -2,6 +2,10 @@
 session_start();
 if ($_SESSION['id_seller'] == "") {
     header("location: signin.php");
+}
+if ($_SESSION['role'] == "noseller") {
+    echo "<script>alert('รอการอนุมัติจากผู้จัดการ')</script>";
+    echo "<script>window.location.href='../seller/signin.php'</script>";
 } else {
 ?>
     <!DOCTYPE html>
@@ -17,8 +21,8 @@ if ($_SESSION['id_seller'] == "") {
     <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
         <div class="wrapper">
 
-        <?php include './components/MainSidebarContainer.php' ?>
-        <div class="content-wrapper">
+            <?php include './components/MainSidebarContainer.php' ?>
+            <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <div class="content-header">
                     <div class="container-fluid">
@@ -35,7 +39,7 @@ if ($_SESSION['id_seller'] == "") {
                         </div><!-- /.row -->
                     </div><!-- /.container-fluid -->
                 </div>
-        </div>
+            </div>
     </body>
 
     </html>

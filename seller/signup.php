@@ -11,8 +11,9 @@ if (isset($_POST['submit'])) {
     $birthday = $_POST['birthday'];
     $idcard = $_POST['idcard'];
     $phone = $_POST['phone'];
+    $role="noseller";
 
-    $sql = $userdata->registrationseller($fastname, $lastname, $idcard,$email, $password, $gender, $phone ,$birthday);
+    $sql = $userdata->registrationseller($fastname, $lastname, $idcard, $email, $password, $gender, $phone, $birthday,$role);
     if ($sql) {
         echo "<script>alert('Ragistor Successfull')</script>";
         echo "<script>window.location.href='signin.php'</script>";
@@ -24,6 +25,7 @@ if (isset($_POST['submit'])) {
 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,55 +33,109 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Signup Seller</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="mt-5">สมัครสมาชิก</h1>
-        <hr>
-        <form method="POST">
-            <div class="mb-3">
-                <label for="fastname" class="form-label">ชื่อจริง</label>
-                <input type="text" class="form-control" id='username' name="fastname">
+    <?php include './components/navbars.php' ?>
+    <section class="vh-100 bg-image">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body p-5">
+                                <h2 class="text-uppercase text-center mb-5">account seller</h2>
 
+                                <form method="POST">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <input type="text" class="form-control form-control-lg" id='username' name="fastname">
+                                                <label class="form-label" for="firstName" id="firstName" name="fastname">First Name</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <input type="text" class="form-control form-control-lg" id='username' name="lastname">
+                                                <label class="form-label" for="lastName" id="lastName" name="lastname">Last Name</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="email" class="form-control form-control-lg" id='email' name="email">
+                                        <label class="form-label" for="email" id='email' name="email">Your Email</label>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="password" class="form-control form-control-lg" id='password' name="password">
+                                        <label class="form-label" for="form3Example4cg">Password</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <input type="date" class="form-control form-control-lg " id='birthday' name="birthday">
+                                                <label class="form-label" for="birthday" id="birthday" name="birthday">birthday</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <select class="form-select form-select-lg " type="gender" id='gender' name="gender">
+                                                    <option value="Female">Female</option>
+                                                    <option value="Male">Male</option>
+                                                </select>
+                                                <label class="form-label" for="gender" id="gender" name="gender">gender</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <input type="text" class="form-control form-control-lg" id='idcard' name="idcard">
+                                                <label class="form-label" for="idcard" id="idcard" name="idcard">IDcard for 13 number</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <input type="text" class="form-control form-control-lg" id='phone' name="phone">
+                                                <label class="form-label" for="phone" id="phone" name="phone">Phone Number</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" name="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register for Seller</button>
+                                    </div>
+
+                                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!" class="fw-bold text-body"><u>Login here</u></a></p>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="lastname" class="form-label">นามสกุล</label>
-                <input type="text" class="form-control" id='username' name="lastname">
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">email</label>
-                <input type="email" class="form-control" id='email' name="email" onblur="checkemail(this.value)">
-              
-                <div class="mb-3">
-                    <label for="password" class="form-label">password</label>
-                    <input type="password" class="form-control" id='password' name="password">
-                </div>
-                <div class="mb-3">
-                    <label for="gender" class="form-label">เพศ</label>
-                    <input type="text" class="form-control" id='gender' name="gender">
-                </div>
-                <div class="mb-3">
-                    <label for="date" class="form-label">วันเกิด</label>
-                    <input type="date" class="form-control" id='birthday' name="birthday">
-                </div>
-                <div class="mb-3">
-                    <label for="idcard" class="form-label">เลขบัตรประชาชน</label>
-                    <input type="text" class="form-control" id='idcard' name="idcard">
-                </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">เบอร์</label>
-                    <input type="text" class="form-control" id='phone' name="phone">
-                </div>
-                <button type="submit" name="submit" class="btn btn-success">สมัครสมาชิก</button>
-        </form>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        </div>
+    </section>
+
 </body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
 
 </html>

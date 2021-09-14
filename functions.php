@@ -24,9 +24,9 @@
             VALUES('$fastname', '$lastname', '$email', '$password', '$gender', '$phone')");
             return $reg;
         }
-        public function registrationseller($fastname, $lastname, $idcard,$email, $password, $gender, $phone ,$birthday){
-            $reg = mysqli_query($this->dbcon, "INSERT INTO sellers(fastname, lastname, idcard, email, password,gender, phone,birthday)
-            VALUES('$fastname', '$lastname','$idcard', '$email', '$password', '$gender', '$phone', '$birthday')");
+        public function registrationseller($fastname, $lastname, $idcard,$email, $password, $gender, $phone ,$birthday, $role){
+            $reg = mysqli_query($this->dbcon, "INSERT INTO sellers(fastname, lastname, idcard, email, password,gender, phone,birthday,role)
+            VALUES('$fastname', '$lastname','$idcard', '$email', '$password', '$gender', '$phone', '$birthday','$role')");
             return $reg;
         }
         public function createshop($id_seller,$id_area,$nameshop,$lat,$lon){
@@ -47,6 +47,11 @@
         public function signinadmin($email, $password){
             $signinquery = mysqli_query($this->dbcon, 
             "SELECT * FROM admins WHERE email = '$email' AND password ='$password'");
+            return $signinquery;
+        }
+        public function signinmanager($email, $password){
+            $signinquery = mysqli_query($this->dbcon, 
+            "SELECT * FROM managers WHERE email = '$email' AND password ='$password'");
             return $signinquery;
         }
 

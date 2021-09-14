@@ -17,7 +17,7 @@ require_once('connection.php');
 </head>
 
 <body>
-    <?php include './components/Navbar.php' ?>
+    <?php include './components/navbars.php' ?>      
     <div class="container">
         <br />
         <div class="alert alert-primary" role="alert">

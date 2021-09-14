@@ -1,5 +1,5 @@
 <?php 
     session_start();
     session_destroy();
-    header("location:../../projectweb/");
+    header("location:../loginAdmin.php");
 ?>

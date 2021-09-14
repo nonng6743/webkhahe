@@ -41,7 +41,6 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body class="hold-transition register-page">
-    <?php include './components/Navbar.php' ?>
     <div class="hold-transition register-page">
         <div class="register-box">
             <div class="card card-outline card-primary">

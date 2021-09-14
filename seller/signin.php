@@ -15,11 +15,12 @@ if (isset($_POST['login'])) {
         $_SESSION['fastname'] = $num['fastname'];
         $_SESSION['lastname'] = $num['lastname'];
         $_SESSION['role'] = $num['role'];
+
         echo "<script>alert('Login Successfull')</script>";
         echo "<script>window.location.href='../seller/dashboardseller.php'</script>";
     } else {
         echo "<script>alert('Something went wrong! Please try again...')</script>";
-        echo "<script>window.location.href='../sellersignin.php'</script>";
+        echo "<script>window.location.href='../seller/signin.php'</script>";
     }
 }
 
