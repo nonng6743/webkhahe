@@ -1,3 +1,16 @@
+CREATE TABLE users (
+	id_user Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	fastname varchar(255) NOT NULL,
+    lastname varchar(255) NOT NULL,
+    phone varchar(10) NOT NULL,
+    gender varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
+    role varchar(255) NOT NULL DEFAULT 'user'
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+
 CREATE TABLE sellers (
 	id_seller Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	fastname varchar(255) NOT NULL,
@@ -57,6 +70,14 @@ CREATE TABLE managers (
 CREATE TABLE promotion (
 	id_promotion Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     imgUrl varchar(255) NOT NULL,
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE actionclickuser (
+	id_actionclickuser Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_user Int(11) NOT NULL,
+    id_products int(11) NOT NULL,
     regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
     
     ) ENGINE=INNODB DEFAULT CHARSET=utf8;
