@@ -21,7 +21,7 @@ $category_id = $_REQUEST['category_id'];
 </head>
 
 <body>
-    <?php include './seller/components/Navbar.php' ?>
+    <?php include './components/navbars.php' ?>
     <div class="container">
         <br />
         <div class="alert alert-primary" role="alert">

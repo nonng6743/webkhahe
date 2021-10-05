@@ -29,9 +29,9 @@
             VALUES('$fastname', '$lastname','$idcard', '$email', '$password', '$gender', '$phone', '$birthday','$role')");
             return $reg;
         }
-        public function createshop($id_seller,$id_area,$nameshop,$lat,$lon){
-            $reg = mysqli_query($this->dbcon, "INSERT INTO shops(id_seller,id_area,nameshop,lat,lon)
-            VALUES('$id_seller','$id_area','$nameshop','$lat','$lon')");
+        public function createshop($id_seller,$nameshop,$lat,$lon){
+            $reg = mysqli_query($this->dbcon, "INSERT INTO shops(id_seller,nameshop,lat,lon)
+            VALUES('$id_seller','$nameshop','$lat','$lon')");
             return $reg;
         }
         public function signin($email, $password){
@@ -71,6 +71,11 @@
         }
         public function quertyproducts(){
             $reg = mysqli_query($this->dbcon,"SELECT * FROM products");
+            return $reg;
+        }
+        public function createpromotion($imgUrl){
+            $reg = mysqli_query($this->dbcon, "INSERT INTO promotion(imgUrl)
+            VALUES('$imgUrl')");
             return $reg;
         }
 

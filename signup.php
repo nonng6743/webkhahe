@@ -40,7 +40,8 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="./seller/dist/css/adminlte.min.css">
 </head>
 
-<body class="hold-transition register-page">
+<body>
+    <?php include './components/navbars.php' ?>
     <div class="hold-transition register-page">
         <div class="register-box">
             <div class="card card-outline card-primary">

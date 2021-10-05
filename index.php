@@ -17,9 +17,10 @@ require_once('connection.php');
 </head>
 
 <body>
-    <?php include './components/navbars.php' ?>      
+    <?php include './components/navbars.php' ?>
     <div class="container">
         <br />
+
         <div class="alert alert-primary" role="alert">
             โปรโมชั่นสินค้า
         </div>
@@ -28,17 +29,27 @@ require_once('connection.php');
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="./upload/img/thumb-1920-633288.png" class="d-block w-100">
                 </div>
-                <div class="carousel-item">
-                    <img src="./upload/img/thumb-1920-633288.png" class="d-block w-100">
-                </div>
-                <div class="carousel-item">
-                    <img src="./upload/img/thumb-1920-633288.png" class="d-block w-100">
-                </div>
+                <?php
+                $stmt = $db->prepare('select * from promotion');
+                $stmt->execute();
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    extract($row);
+                ?>
+                    <div class="carousel-item ">
+                        <img src="./upload/promotion/<?php echo $row['imgUrl'] ?>" class="d-block w-100">
+                    </div>
+
+                <?php
+                }
+                ?>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -57,7 +68,7 @@ require_once('connection.php');
         <div class="container">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
                 <div class="col">
-                    <div class="p-3 border bg-light" ><a href="productCategory.php?category_id=อาหารสด"><img src="./upload/img/ARTICLE.jpg" width="40px" height="40px" ></a> อาหารสด</div>
+                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=อาหารสด"><img src="./upload/img/ARTICLE.jpg" width="40px" height="40px"></a> อาหารสด</div>
                 </div>
                 <div class="col">
                     <div class="p-3 border bg-light"><a href="productCategory.php?category_id=อาหารสำเร็จรูป"><img src="./upload/img/อาหารสำเร็จรูป.jpg" width="40px" height="40px"></a> อาหารสำเร็จรูป</div>
@@ -88,45 +99,17 @@ require_once('connection.php');
                 </div>
             </div>
             <hr />
+
+
             <div class="alert alert-primary" role="alert">
                 สินค้าเเนะนำ
             </div>
-            <div class="alert alert-primary" role="alert">
-                สินค้าทั้งหมด
-            </div>
-            <div class="container mt-5">
-                <div class="row">
-                    <?php
-                    $select_stmt = $db->prepare('SELECT * FROM products');
-                    $select_stmt->execute();
+            <?php include './components/page/products/products.php' ?>
 
-                    while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
-                    ?>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="text-center">
-                                    <br />
-                                    <img src="./upload/<?php echo $row['imgUrl']; ?>" width="200px" height="200px">
-                                </div>
-                                <div class="text-center">
-                                    <br />
-                                    <h4><?php echo $row['name']; ?></h4>
-                                    <span class="text-success">
-                                        <h5>ราคา <?php echo $row['price']; ?> บาท</h5>
-                                    </span>
-                                    <h6>วันที่โพสต์: <?php echo $row['regdate']; ?></h6>
-                                    <a href="product.php?product_id=<?php echo $row['id_products']; ?>" class="btn btn-primary">ดูรายละเอียดเพิ่มเติม</a>
-                                </div>
-                                <br />
-                            </div>
-                        </div>
-                    <?php } ?>
 
-                </div>
-                <hr/>
-            </div>
+
+
         </div>
-    </div>
 
 
 

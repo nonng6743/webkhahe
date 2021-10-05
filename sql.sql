@@ -54,3 +54,9 @@ CREATE TABLE managers (
     role varchar(255) NOT NULL DEFAULT 'manager'
     ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+CREATE TABLE promotion (
+	id_promotion Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    imgUrl varchar(255) NOT NULL,
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;

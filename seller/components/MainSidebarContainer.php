@@ -88,6 +88,14 @@
                     </li>
                     <li class="nav-header">Shop</li>
                     <li class="nav-item">
+                        <a href="createshop.php" class="nav-link">
+                        <ion-icon  class="nav-icon fas " name="bag-check-sharp"></ion-icon>
+                            <p>
+                                Create Shop
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="editshop.php" class="nav-link">
                         <ion-icon  class="nav-icon fas " name="bag-check-sharp"></ion-icon>
                             <p>

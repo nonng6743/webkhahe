@@ -79,7 +79,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                     <li class="nav-item menu-open">
-                        <a href="dashboardseller.php" class="nav-link active">
+                        <a href="dashboard.php" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -88,18 +88,18 @@
                     </li>
                     <li class="nav-header">Edits</li>
                     <li class="nav-item">
-                        <a href="editshops.php" class="nav-link">
+                        <a href="editseller.php" class="nav-link">
                         <ion-icon  class="nav-icon fas " name="bag-check-sharp"></ion-icon>
                             <p>
-                                Shop
+                                ผู้ขายที่รอการอนุมัติ 
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="editproducts.php" class="nav-link">
+                        <a href="promotions.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                                Products
+                                ประกาศโปรโมทชั่น
                             </p>
                         </a>
                     </li>

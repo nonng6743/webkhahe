@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
         $_SESSION['fastname'] = $num['fastname'];
         $_SESSION['role'] = $num['role'];
         echo "<script>alert('Login Successfull')</script>";
-        echo "<script>window.location.href='dashboard.php'</script>";
+        echo "<script>window.location.href='index.php'</script>";
     } else {
         echo "<script>alert('Something went wrong! Please try again...')</script>";
         echo "<script>window.location.href='signin.php'</script>";
@@ -42,8 +42,9 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="./seller/dist/css/adminlte.min.css">
 </head>
 
-<body class="hold-transition login-page">
-    <?php include './components/Navbar.php' ?>
+<body >
+    <?php include './components/navbars.php' ?>
+    <div class="hold-transition login-page">
     <div class="hold-transition login-page">
         <div class="login-box">
             <div class="card card-outline card-primary">
@@ -78,6 +79,7 @@ if (isset($_POST['login'])) {
                             <a href="#" class="btn btn-block btn-primary">
                                 <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
                             </a>
+                            <?php include './components/fd/index.php' ?>
                             <a href="#" class="btn btn-block btn-danger">
                                 <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
                             </a>
@@ -104,6 +106,8 @@ if (isset($_POST['login'])) {
     <script src="./seller/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="./seller/dist/js/adminlte.min.js"></script>
+    </div>
+    <?php include './components/fd/index.php' ?>
 </body>
 
 </html>
