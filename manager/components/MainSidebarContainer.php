@@ -37,7 +37,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="../../../projectweb/admin/components/logout.php" class="btn btn-danger">Logout</a>
+                <a href="./components/logout.php" class="btn btn-danger">Logout</a>
             </li>
 
         </ul>
@@ -45,7 +45,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="dashboard.php" class="brand-link">
-            <img src="../seller/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <!--<img src="../seller/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">-->
             <span class="brand-text font-weight-light">Kheha K.6 </span>
         </a>
 
@@ -54,25 +54,15 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="../seller/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="../upload/Profile-Transparent.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="dashboard.php" class="d-block"><?php echo $_SESSION['fastname'] ?> <?php echo $_SESSION['lastname'] ?></a>
+                    <a href="dashboard.php" class="d-block"><?php echo $_SESSION['firstname'] ?> <?php echo $_SESSION['lastname'] ?></a>
 
                 </div>
             </div>
 
-            <!-- SidebarSearch Form -->
-            <div class="form-inline">
-                <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-sidebar">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
@@ -86,7 +76,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-header">Edits</li>
+                    <li class="nav-header">จัดการ</li>
                     <li class="nav-item">
                         <a href="editseller.php" class="nav-link">
                         <ion-icon  class="nav-icon fas " name="bag-check-sharp"></ion-icon>
@@ -99,34 +89,79 @@
                         <a href="promotions.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                                ประกาศโปรโมทชั่น
+                                ประกาศข่าวสารโปรโมชั่น
+                            </p>
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="promotionsellers.php" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                                โปรโมชั่นจากร้านค้า
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="editsellers.php" class="nav-link">
+                        <a href="editshops.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                               Seller
+                                จัดการร้านค้าในระบบ
+                            </p>
+                        </a>
+                    </li>
+                     <li class="nav-header">เเผงร้านค้า</li>
+                    <li class="nav-item">
+                        <a href="add_area.php" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                               เพิ่มเเผงร้านค้า
+                            </p>
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="areas.php" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                               เเผงร้านค้าทั้งหมด
+                            </p>
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="reserve_area.php" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                               รอการอนุมัติเเผงร้านค้า
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-header">เเชท</li>
+                     <li class="nav-item">
+                       <a href="chartseller.php" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                            <p>
+                               ติดต่อร้านค้า
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="editusers.php" class="nav-link">
+                       <a href="reports.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                               User
+                               เเจ้งปัญหา
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="editmanagers.php" class="nav-link">
+                    <li class="nav-header">สินค้า</li>
+                     <li class="nav-item">
+                       <a href="repeatshop.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                                Manager
+                               รายชื่อสินค้าที่คล้ายกัน
                             </p>
                         </a>
                     </li>
+                    
+                    
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

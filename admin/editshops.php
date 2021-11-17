@@ -1,9 +1,10 @@
 <?php
-require_once('../../projectweb/connection.php');
+require_once('../connection.php');
 session_start();
+ error_reporting(0);
 
-if ($_SESSION['id_admin'] == "") {
-    header("location: signin.php");
+if (!$_SESSION['id_admin'] ) {
+    header("location: loginAdmin.php");
 } else {
 
     if (isset($_REQUEST['delete_id'])) {
@@ -20,7 +21,7 @@ if ($_SESSION['id_admin'] == "") {
         $delete_stmt->bindParam(':id', $id);
         $delete_stmt->execute();
 
-        header("Location: editproducts.php");
+        header("Location: editshops.php");
     }
 
 ?>
@@ -31,7 +32,7 @@ if ($_SESSION['id_admin'] == "") {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Product</title>
+        <title>หน้าจัดการร้านค้า</title>
 
     </head>
 
@@ -44,7 +45,7 @@ if ($_SESSION['id_admin'] == "") {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Edit Product Page</h1>
+                                <h1 class="m-0">หน้าจัดการร้านค้า</h1>
                                 <hr />
                             </div>
                         </div>
@@ -53,7 +54,7 @@ if ($_SESSION['id_admin'] == "") {
                                 <div class="card">
                                     <div class="card card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Edit Products</h3>
+                                            <h3 class="card-title">จัดการร้านค้า</h3>
                                             </h3>
                                         </div>
                                     </div>
@@ -61,27 +62,35 @@ if ($_SESSION['id_admin'] == "") {
                                         <table class="table table-hover text-nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Name Shop</th>
-                                                    <th>ID Seller</th>
-                                                    <th>Date</th>
-                                                    <th>Area</th>
-                                                    <th>location</th>
+                                                    <th>ลำดับ</th>
+                                                    <th>ชื่อร้านค้า</th>
+                                                    <th>ชื่อผู้ขาย</th>
+                                                    <th>ไอดี เเผงร้านค้า</th>
+                                                    
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                $i = 0;
                                                 $select_stmt = $db->prepare('SELECT * FROM shops');
                                                 $select_stmt->execute();
 
                                                 while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                    $i = $i+1;
                                                 ?>
                                                     <tr>
+                                                        <td><?php echo $i?></td>
                                                         <td><?php echo $row['nameshop']; ?></td>
-                                                        <td><?php echo $row['id_seller']; ?></td>
-                                                        <td><?php echo $row['regdate']; ?></td>
+                                                        <td><?php $id_seller =  $row['id_seller'];
+                                                            $select_seller = $db->prepare("SELECT * FROM sellers WHERE id_seller = '$id_seller'");
+                                                            $select_seller->execute();
+                                                            $rowseller = $select_seller->fetch(PDO::FETCH_ASSOC);
+                                                            echo $rowseller['firstname'];
+                                                                
+                                                        
+                                                         ?></td>
                                                         <td><?php echo $row['id_area']; ?></td>
-                                                        <td><?php echo $row['lat'] ," , ", $row['lon']; ?></td>
                                                         <td><a href="?delete_id=<?php echo $row['id_seller']; ?>" class="btn btn-danger">Delete</a></td>
 
                                                     </tr>

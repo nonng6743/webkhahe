@@ -1,9 +1,10 @@
 <?php
-require_once('../../projectweb/connection.php');
+require_once('../connection.php');
 session_start();
+ error_reporting(0);
 
-if ($_SESSION['id_admin'] == "") {
-    header("location: signin.php");
+if (!$_SESSION['id_admin'] ) {
+    header("location: loginAdmin.php");
 } else {
 
     if (isset($_REQUEST['delete_id'])) {
@@ -29,7 +30,7 @@ if ($_SESSION['id_admin'] == "") {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Manager</title>
+        <title>หน้าจัดการผู้จัดการตลาด</title>
 
     </head>
 
@@ -42,7 +43,7 @@ if ($_SESSION['id_admin'] == "") {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Edit Manager Page</h1>
+                                <h1 class="m-0">หน้าจัดการผู้จัดการตลาด</h1>
                                 <hr />
                             </div>
                         </div>
@@ -51,7 +52,7 @@ if ($_SESSION['id_admin'] == "") {
                                 <div class="card">
                                     <div class="card card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Edit Managers</h3>
+                                            <h3 class="card-title">จัดการผู้จัดการตลาด</h3>
                                             </h3>
                                         </div>
                                     </div>
@@ -59,23 +60,25 @@ if ($_SESSION['id_admin'] == "") {
                                         <table class="table table-hover text-nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>ID Manager</th>
-                                                    <th>Fast Name</th>
-                                                    <th>Last Name</th>
+                                                    <th>ลำดับ</th>
+                                                    <th>ชื่อจริง</th>
+                                                    <th>นามสกุล</th>
                                                     <th>Email</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                $i = 0;
                                                 $select_stmt = $db->prepare('SELECT * FROM managers');
                                                 $select_stmt->execute();
 
                                                 while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                    $i =$i+1;
                                                 ?>
                                                     <tr>
-                                                        <td><?php echo $row['id_manager']; ?></td>
-                                                        <td><?php echo $row['fastname']; ?></td>
+                                                        <td><?php echo $i ?></td>
+                                                        <td><?php echo $row['firstname']; ?></td>
                                                         <td><?php echo $row['lastname']; ?></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><a href="?delete_id=<?php echo $row['id_manager']; ?>" class="btn btn-danger">Delete</a></td>

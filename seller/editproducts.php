@@ -1,10 +1,16 @@
 <?php
+include_once('../functions.php');
 require_once('connection.php');
+$userdata = new DB_con();
 session_start();
 
 if ($_SESSION['id_seller'] == "") {
     header("location: signin.php");
 } else {
+    $id_seller = $_SESSION['id_seller'];
+    $result = $userdata->quertyshops($id_seller);
+    $num = mysqli_fetch_array($result);
+    $id_shop = $num['id_shop'];
 
     if (isset($_REQUEST['delete_id'])) {
         $id = $_REQUEST['delete_id'];
@@ -71,7 +77,7 @@ if ($_SESSION['id_seller'] == "") {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $select_stmt = $db->prepare('SELECT * FROM products');
+                                                $select_stmt = $db->prepare("SELECT * FROM products WHERE id_shop = $id_shop");
                                                 $select_stmt->execute();
 
                                                 while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -82,7 +88,7 @@ if ($_SESSION['id_seller'] == "") {
                                                         <td><?php echo $row['price']; ?></td>
                                                         <td><?php echo $row['category']; ?></td>
                                                         <td><img src="../upload/<?php echo $row['imgUrl']; ?>" width="40px" height="40px" alt=""></td>
-                                                        <td><?php echo $row['description']; ?></td>
+                                
                                                         <td><a href="edit.php?update_id=<?php echo $row['id_products']; ?>" class="btn btn-warning">Edit</a></td>
                                                         <td><a href="?delete_id=<?php echo $row['id_products']; ?>" class="btn btn-danger">Delete</a></td>
 

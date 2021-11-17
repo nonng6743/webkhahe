@@ -1,3 +1,17 @@
+<?php
+include_once('../functions.php');
+$userdata = new DB_con();
+session_start();
+$id_seller = $_SESSION['id_seller'];
+$firstname =  $_SESSION['firstname'];
+
+$sqlidseller = $userdata->quertyidseller($id_seller);
+$num = mysqli_num_rows($sqlidseller);
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,10 +68,10 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="../../../projectweb/upload/seller/<?php echo $_SESSION['image'] ?>" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="dashboardseller.php" class="d-block"><?php echo $_SESSION['fastname'] ?> <?php echo $_SESSION['lastname'] ?></a>
+                    <a href="dashboardseller.php" class="d-block"><?php echo $_SESSION['firstname'] ?> <?php echo $_SESSION['lastname'] ?></a>
 
                 </div>
             </div>
@@ -87,41 +101,77 @@
                         </a>
                     </li>
                     <li class="nav-header">Shop</li>
-                    <li class="nav-item">
-                        <a href="createshop.php" class="nav-link">
-                        <ion-icon  class="nav-icon fas " name="bag-check-sharp"></ion-icon>
-                            <p>
-                                Create Shop
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
+                    <?php 
+                    if ($num > 0) 
+                    {?>
+                         <li class="nav-item">
                         <a href="editshop.php" class="nav-link">
-                        <ion-icon  class="nav-icon fas " name="bag-check-sharp"></ion-icon>
+                            <ion-icon class="nav-icon fas " name="bag-check-sharp"></ion-icon>
                             <p>
                                 Shop
                             </p>
                         </a>
                     </li>
-                    <li class="nav-header">Product</li>
+                    <li class="nav-header">สินค้า</li>
                     <li class="nav-item">
                         <a href="createproduct.php" class="nav-link">
-                        <ion-icon  class="nav-icon fas " name="add-circle-sharp"></ion-icon>
+                            <ion-icon class="nav-icon fas " name="add-circle-sharp"></ion-icon>
                             <p>
-                                Create Product
+                                สร้างสินค้าของคุณ
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="editproducts.php" class="nav-link">
-                        <ion-icon  class="nav-icon fas " name="bag-check-sharp"></ion-icon>
+                            <ion-icon class="nav-icon fas " name="bag-check-sharp"></ion-icon>
                             <p>
                                 Edit Product
                             </p>
                         </a>
                     </li>
+                    <li class="nav-header">เเผงร้านค้า</li>
+                    <li class="nav-item">
+                        <a href="areaseller.php" class="nav-link">
+                            <ion-icon class="nav-icon fas " name="add-circle-sharp"></ion-icon>
+                            <p>
+                                จองเเผงเพื่อขายสินค้า
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-header">เเชท</li>
+                    <li class="nav-item">
+                        <a href="chartseller.php" class="nav-link">
+                            <ion-icon class="nav-icon fas " name="add-circle-sharp"></ion-icon>
+                            <p>
+                                รายชื่อผู้ติดต่อคุณ
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chartmanager.php" class="nav-link">
+                            <ion-icon class="nav-icon fas " name="add-circle-sharp"></ion-icon>
+                            <p>
+                                ติดต่อผู้จัดการตลาด
+                            </p>
+                        </a>
+                    </li>
+
+
+                      
+                    <?php }else {?>
+                        <li class="nav-item">
+                        <a href="createshop.php" class="nav-link">
+                            <ion-icon class="nav-icon fas " name="bag-check-sharp"></ion-icon>
+                            <p>
+                                Create Shop
+                            </p>
+                        </a>
+                    </li>   
+                    <?php } ?>
                     
-                    
+                   
+
+
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

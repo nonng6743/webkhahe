@@ -1,9 +1,4 @@
-<?php
-session_start();
-if ($_SESSION['id_seller'] == "") {
-    header("location: signin.php");
-} else {
-?>
+
     <!DOCTYPE html>
     <html lang="en">
 
@@ -1739,6 +1734,3 @@ if ($_SESSION['id_seller'] == "") {
 
 
 
-<?php
-}
-?>

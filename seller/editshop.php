@@ -22,7 +22,7 @@ if ($_SESSION['id_seller'] == "") {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Product</title>
+        <title>แก้ไขสินค้า</title>
 
     </head>
 
@@ -35,7 +35,7 @@ if ($_SESSION['id_seller'] == "") {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Shop Page</h1>
+                                <h1 class="m-0">หน้าร้านค้า</h1>
                                 <hr />
                             </div>
                         </div>
@@ -44,24 +44,24 @@ if ($_SESSION['id_seller'] == "") {
                                 <div class="card">
                                     <div class="card card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Profile Shop</h3>
+                                            <h3 class="card-title">รายละเอียดร้านค้า</h3>
                                             </h3>
                                         </div>
                                     </div>
                                     <div class="card-body table-responsive p-0">
                                         <div class="card-body">
                                             <div class="text-center">
-                                                <img class="profile-user-img img-fluid img-circle" src="./dist/img/user4-128x128.jpg" alt="User profile picture">
+                                                <img class=" img-fluid " src="../upload/shop/<?php echo $image?>" alt="">
                                             </div>
-                                            <strong>Name Shop </strong>
+                                            <strong>ชื่อร้าน </strong>
                                             <p class="text-muted">
                                                 <?php echo $nameshop; ?>
                                             </p>
                                             <hr>
 
-                                            <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+                                            <strong><i class="fas fa-map-marker-alt mr-1"></i> ตำแหน่งร้านค้า</strong>
 
-                                            <p class="text-muted"> <?php echo $lat; ?>, <?php echo $lon; ?></p>
+                                            <p class="text-muted"> <?php echo $lat; ?>, <?php echo $lng; ?></p>
                                         </div>
                                         <!-- /.card-body -->
                                     </div>

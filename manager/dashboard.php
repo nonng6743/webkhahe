@@ -1,8 +1,9 @@
 <?php
 require_once('../connection.php');
 session_start();
-if ($_SESSION['id_manager'] == "") {
-    header("location: signin.php");
+ error_reporting(0);
+if (!$_SESSION['id_manager']) {
+    header("location: loginManager.php");
 } else {
 ?>
     <!DOCTYPE html>
@@ -138,7 +139,7 @@ if ($_SESSION['id_manager'] == "") {
                                         ?>
 
                                         <h3><?php echo $count_users ?></h3>
-                                        <p>ผู้ใข้งานในระบบ</p>
+                                        <p>สมาชิกในระบบ</p>
                                     </div>
                                     <br />
                                     <div class="icon">
@@ -147,10 +148,150 @@ if ($_SESSION['id_manager'] == "") {
 
                                 </div>
                             </div>
+                           
                             <!-- ./col -->
 
                             <!-- ./col -->
                         </div>
+                         <h5 class="mb-2 mt-4">ยอดผู้ใช้งานรายวัน</h5>
+                         <br/>
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-warning">
+                                    <br />
+                                    <div class="inner">
+                                        <?php
+                                        $select_view = $db->prepare("SELECT COUNT(*) num FROM login WHERE date(regdate)>=date_add(now(),interval - 1 day)   
+                                            AND date(regdate)<=curdate() AND typeuser = 'user';");
+                                        $select_view->execute();
+                                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+
+                                        <h3><?php echo $view['num'] ?></h3>
+
+                                        <p>สมาชิกในระบบ</p>
+                                        <br />
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-success">
+                                    <br />
+                                    <div class="inner">
+                                        <?php
+                                        $select_view = $db->prepare("SELECT COUNT(*) num FROM login WHERE date(regdate)>=date_add(now(),interval - 1 day)   
+                                            AND date(regdate)<=curdate() AND typeuser = 'seller';");
+                                        $select_view->execute();
+                                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+
+                                        <h3><?php echo $view['num'] ?></h3>
+
+                                        <p>ผู้ขายในระบบ</p>
+                                        <br />
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <h5 class="mb-2 mt-4">ยอดผู้ใช้งานรายสัปดาห์</h5>
+                         <br/>
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-warning">
+                                    <br />
+                                    <div class="inner">
+                                        <?php
+                                        $select_view = $db->prepare("SELECT COUNT(*) num FROM login WHERE date(regdate)>=date_add(now(),interval - 1 week)   
+                                            AND date(regdate)<=curdate() AND typeuser = 'user';");
+                                        $select_view->execute();
+                                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+
+                                        <h3><?php echo $view['num'] ?></h3>
+
+                                        <p>สมาชิกในระบบ</p>
+                                        <br />
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-success">
+                                    <br />
+                                    <div class="inner">
+                                        <?php
+                                        $select_view = $db->prepare("SELECT COUNT(*) num FROM login WHERE date(regdate)>=date_add(now(),interval - 1 week)   
+                                            AND date(regdate)<=curdate() AND typeuser = 'seller';");
+                                        $select_view->execute();
+                                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+
+                                        <h3><?php echo $view['num'] ?></h3>
+
+                                        <p>ผู้ขายในระบบ</p>
+                                        <br />
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mb-2 mt-4">ยอดผู้ใช้งานรายปี</h5>
+                         <br/>
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-warning">
+                                    <br />
+                                    <div class="inner">
+                                        <?php
+                                        $select_view = $db->prepare("SELECT COUNT(*) num FROM login WHERE date(regdate)>=date_add(now(),interval - 1 year)   
+                                            AND date(regdate)<=curdate() AND typeuser = 'user';");
+                                        $select_view->execute();
+                                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+
+                                        <h3><?php echo $view['num'] ?></h3>
+
+                                        <p>สมาชิกในระบบ</p>
+                                        <br />
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-success">
+                                    <br />
+                                    <div class="inner">
+                                        <?php
+                                        $select_view = $db->prepare("SELECT COUNT(*) num FROM login WHERE date(regdate)>=date_add(now(),interval - 1 year)   
+                                            AND date(regdate)<=curdate() AND typeuser = 'seller';");
+                                        $select_view->execute();
+                                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+
+                                        <h3><?php echo $view['num'] ?></h3>
+
+                                        <p>ผู้ขายในระบบ</p>
+                                        <br />
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div><!-- /.container-fluid -->
                 </div>
             </div>

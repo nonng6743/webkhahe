@@ -1,0 +1,92 @@
+<?php
+require_once('../connection.php');
+session_start();
+
+if ($_SESSION['id_manager'] == "") {
+    header("location: signin.php");
+} else {
+    
+
+
+?>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ร้านค้าที่มีสินค้าคล้ายกัน </title>
+        
+    </head>
+
+    <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+        <div class="wrapper">
+            <?php include './components/MainSidebarContainer.php' ?>
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0">รายชื่อสินค้าที่คล้ายกันจำนวนมาก</h1>
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card card-primary">
+                                        <div class="card-header">
+                                            <h3 class="card-title">รายชื่อสินค้าที่คล้ายกันจำนวนมาก</h3>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ลำดับ</th>
+                                                    <th>ชื่อสินค้าที่คล้ายกัน</th>
+                                                    <th>จำนวนร้านค้าที่ขายสินค้านี้</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $i =0;
+                                                
+                                                $select_stmt = $db->prepare("SELECT nameproduct, COUNT(*) cnt FROM products GROUP BY nameproduct  HAVING COUNT(*) >1");
+                                                $select_stmt->execute();
+
+                                                while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                     $i = $i+1;                                            
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $i?></td>
+                                                        <td><?php echo $row['nameproduct'];
+                                                                 
+                                                                     ?></td>
+                                                        <td><?php echo $row['cnt'];
+                                                                     ?></td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div><!-- /.row -->
+                        </div><!-- /.container-fluid -->
+                    </div>
+                    
+    </body>
+
+    </html>
+
+
+    </body>
+
+    </html>
+
+<?php
+}
+?>

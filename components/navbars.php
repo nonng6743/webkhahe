@@ -1,7 +1,16 @@
-<?php 
-    error_reporting(0);
-    session_start();
-    $id_user = $_SESSION['id_user'];
+<?php
+error_reporting(0);
+session_start();
+$id_user = $_SESSION['id_user'];
+$firstname = $_SESSION['firstname'];
+$img = $_SESSION['image'];
+
+if (isset($_POST['submit'])) {
+    $name = $_POST['namesearch'];
+    echo "<script>window.location.href='./seachproduct.php?seach_name=$name'</script>";
+}
+
+
 ?>
 
 
@@ -42,6 +51,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="../../../projectweb/seller/signup.php">ขายสินค้ากับเรา</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./reportchat.php">เเจ้งปัญหากับเรา</a>
+                    </li>
                 </ul>
                 <form class="d-flex">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -50,6 +62,7 @@
                             echo "<li><a class='nav-link' href='./signin.php'>เข้าสู่ระบบ</a></li>";
                             echo "<li><a class='nav-link' href='./signup.php'>สมัครสมาชิก</a></li>";
                         } elseif ($id_user) {
+                            echo "<li><a class='nav-link' href='./dashboard.php'><img src='./upload/profile/$img' width='20px' height='20px' alt=''>$firstname</a></li>";
                             echo "<li><a href='logout.php' class='btn btn-danger'>Logout</a></li>";
                         }
                         ?>
@@ -60,6 +73,22 @@
             </div>
         </div>
     </nav>
+    <br />
+    <div class="wrapper">
+        <div class="container-md">
+            <section class="content">
+                <div class="card card-solid">
+                    <div class="alert alert-primary" role="alert">
+                        <form class="d-flex" action="" method="post" enctype="multipart/form-data">
+                            <input class="form-control me-2" type="search" placeholder="Search" name="namesearch" aria-label="Search">
+                            <button class="btn btn-primary" type="submit" name="submit">ค้นหา</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
 
 </body>
 

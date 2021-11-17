@@ -1,19 +1,20 @@
 <?php
-require_once('../../projectweb/connection.php');
+require_once('../connection.php');
 session_start();
+ error_reporting(0);
 
-if ($_SESSION['id_admin'] == "") {
-    header("location: signin.php");
+if (!$_SESSION['id_admin'] ) {
+    header("location: loginAdmin.php");
 } else {
 
     if (isset($_POST['submit'])) {
-        $fastname = $_POST['fastname'];
+        $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $email = $_POST['email'];
         $password = md5($_POST['password']);
 
-        if (empty($fastname)) {
-            $errorMsg = "Please Enter fastname ";
+        if (empty($firstname)) {
+            $errorMsg = "Please Enter firstname ";
         } elseif (empty($lastname)) {
             $errorMsg = "Please Enter lastname";
         } elseif (empty($email)) {
@@ -23,9 +24,9 @@ if ($_SESSION['id_admin'] == "") {
         }
 
         if (!isset($errorMsg)) {
-            $sql = "INSERT INTO managers (fastname, lastname, email, password ) VALUES (?,?,?,?)";
+            $sql = "INSERT INTO managers (firstname, lastname, email, password ) VALUES (?,?,?,?)";
             $stmt = $db->prepare($sql);
-            $stmt->execute([$fastname, $lastname, $email, $password]);
+            $stmt->execute([$firstname, $lastname, $email, $password]);
             if ($sql) {
                 echo "<script>alert('Cearte Successfull')</script>";
                 echo "<script>window.location.href='../admin/editmanagers.php'</script>";
@@ -72,8 +73,8 @@ if ($_SESSION['id_admin'] == "") {
                                         <div class="card-body">
 
                                             <div class="form-group">
-                                                <label for="fastname">fast name</label>
-                                                <input type="text" class="form-control" id="fastname" name="fastname" placeholder="fastname">
+                                                <label for="firstname">first name</label>
+                                                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="firstname">
                                             </div>
                                             <div class="form-group">
                                                 <label for="lastname">last name</label>

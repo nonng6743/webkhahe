@@ -1,30 +1,53 @@
 <?php
+require_once('connection.php');
+
 session_start();
-include_once('../functions.php');
-$userdata = new DB_con();
 
-if (isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = md5($_POST['password']);
 
-    $result = $userdata->signinseller($email, $password);
-    $num = mysqli_fetch_array($result);
 
-    if ($num > 0) {
-        $_SESSION['id_seller'] = $num['id_seller'];
-        $_SESSION['fastname'] = $num['fastname'];
-        $_SESSION['lastname'] = $num['lastname'];
-        $_SESSION['role'] = $num['role'];
 
-        echo "<script>alert('Login Successfull')</script>";
-        echo "<script>window.location.href='../seller/dashboardseller.php'</script>";
+if (isset($_REQUEST['btn_login'])) {
+    $email = strip_tags($_REQUEST['email']);
+    $password = strip_tags($_REQUEST['password']);
+
+    if (empty($email)) {
+        $errorMsg[] = "Please enter username or email";
+    } else if (empty($password)) {
+        $errorMsg[] = "Please enter password";
     } else {
-        echo "<script>alert('Something went wrong! Please try again...')</script>";
-        echo "<script>window.location.href='../seller/signin.php'</script>";
+        try {
+            $select_stmt = $db->prepare("SELECT * FROM sellers WHERE  email = :uemail");
+            $select_stmt->execute(array(':uemail' => $email));
+            $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($select_stmt->rowCount() > 0) {
+                if ($email == $row['email']) {
+                    if (md5($password, $row['password'])) {
+                        $_SESSION['id_seller'] = $row['id_seller'];
+                        $_SESSION['firstname'] = $row['firstname'];
+                        $_SESSION['lastname'] = $row['lastname'];
+                        $_SESSION['role'] = $row['role'];
+                        $_SESSION['image'] = $row['image'];
+                        $role = $row['role'];
+                        $message = ("INSERT INTO login(typeuser) VALUES ('$role')");
+                                                $stmt = $db->prepare($message);
+                                                $stmt->execute();
+                        $loginMsg = "เข้าสู่ระบบสำเร็จ";
+                        header("refresh:2;dashboardseller.php");
+                    } else {
+                        $errorMsg[] = "พาสเวิร์ดผิด กรุณา ลองอีกครั้ง";
+                    }
+                } else {
+                    $errorMsg[] = "ไม่พบอีเมลนี้ในระบบ กรุณาลองใหม่อีกครั้ง";
+                }
+            } else {
+                $errorMsg[] = "ไม่พบอีเมลนี้ในระบบ กรุณาลองใหม่อีกครั้ง";
+            }
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +57,7 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>หน้าเข้าสู่ระบบ</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -50,74 +73,91 @@ if (isset($_POST['login'])) {
     <?php ?>
     <?php include './components/navbars.php' ?>
     <div class="hold-transition login-page">
-    <div class="hold-transition login-page">
-        <div class="login-box">
-            <div class="card card-outline card-primary">
-                <div class="card-header text-center">
-                    <a href="../index.php" class="h1"><b>Kheha</b> K.6</a>
-                </div>
-                <div class="card-body">
-                    <p class="login-box-msg">เข้าสู่ระบบ</p>
+        <div class="hold-transition login-page">
+            <div class="login-box">
+                <div class="card card-outline card-primary">
+                    <div class="card-header text-center">
+                        <a href="../index.php" class="h1"><b>ตลาดเคหะ</b> K.6</a>
+                    </div>
+                    <div class="card-body">
+                        <p class="login-box-msg">เข้าสู่ระบบ</p>
 
-                    <form method="post">
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Email" id='email' name="email">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
+                        <form method="post">
+                            <?php
+                            if (isset($errorMsg)) {
+                                foreach ($errorMsg as $error) {
+                            ?>
+                                    <div class="alert alert-danger">
+                                        <strong><?php echo $error; ?></strong>
+                                    </div>
+                            <?php
+                                }
+                            }
+                            ?>
+
+                            <?php
+                            if (isset($loginMsg)) {
+                            ?>
+                                <div class="alert alert-success">
+                                    <strong><?php echo $loginMsg; ?></strong>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                            <div class="input-group mb-3">
+                                <input type="email" class="form-control" placeholder="อีเมล" id='email' name="email">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-envelope"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control" placeholder="Password" id='password' name="password">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" placeholder="พาสเวิร์ด" id='password' name="password">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="social-auth-links text-center mt-2 mb-3">
-                            <button type="submit" name="login" class="btn btn-primary btn-block">Sign In</button>
-    
-                        </div>
-                    </form>
-                    <!-- /.social-auth-links -->
+                            <div class="social-auth-links text-center mt-2 mb-3">
+                                <button type="submit" name="btn_login" class="btn btn-primary btn-block">เข้าสู่ระบบสำหรับผู้ขาย</button>
 
-                    <p class="mb-1">
-                        <a href="forgot-password.html">I forgot my password</a>
-                    </p>
-                    <p class="mb-0">
-                        <a href="./signup.php" class="text-center">Register a new membership</a>
-                    </p>
+                            </div>
+                        </form>
+                        
+                        <p class="mb-0">
+                            <a href="./signup.php" class="text-center">สมัครเป็นผู้ขาย</a>
+                        </p>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
+                <!-- /.card -->
             </div>
-            <!-- /.card -->
         </div>
-    </div>
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.js"></script>
+        <script src="plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- overlayScrollbars -->
+        <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="dist/js/adminlte.js"></script>
 
-    <!-- PAGE PLUGINS -->
-    <!-- jQuery Mapael -->
-    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="plugins/raphael/raphael.min.js"></script>
-    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-    <!-- ChartJS -->
-    <script src="plugins/chart.js/Chart.min.js"></script>
+        <!-- PAGE PLUGINS -->
+        <!-- jQuery Mapael -->
+        <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+        <script src="plugins/raphael/raphael.min.js"></script>
+        <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+        <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+        <!-- ChartJS -->
+        <script src="plugins/chart.js/Chart.min.js"></script>
 
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="dist/js/pages/dashboard2.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="dist/js/demo.js"></script>
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script src="dist/js/pages/dashboard2.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

@@ -1,9 +1,10 @@
 <?php
-require_once('../../projectweb/connection.php');
+require_once('../connection.php');
 session_start();
+ error_reporting(0);
 
-if ($_SESSION['id_admin'] == "") {
-    header("location: signin.php");
+if (!$_SESSION['id_admin'] ) {
+    header("location: loginAdmin.php");
 } else {
 
     if (isset($_REQUEST['delete_id'])) {
@@ -16,11 +17,11 @@ if ($_SESSION['id_admin'] == "") {
         unlink("../upload/" . $row['imgUrl']); // unlin functoin permanently remove your file
 
         // delete an original record from db
-        $delete_stmt = $db->prepare('DELETE FROM shops WHERE id_seller = :id');
+        $delete_stmt = $db->prepare('DELETE FROM sellers WHERE id_seller = :id');
         $delete_stmt->bindParam(':id', $id);
         $delete_stmt->execute();
 
-        header("Location: editproducts.php");
+        header("Location: editsellers.php");
     }
 
 ?>
@@ -31,7 +32,7 @@ if ($_SESSION['id_admin'] == "") {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Seller</title>
+        <title>หน้าจัดการผู้ขาย</title>
 
     </head>
 
@@ -44,7 +45,7 @@ if ($_SESSION['id_admin'] == "") {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Edit Seller Page</h1>
+                                <h1 class="m-0">หน้าจัดการผู้ขาย</h1>
                                 <hr />
                             </div>
                         </div>
@@ -53,7 +54,7 @@ if ($_SESSION['id_admin'] == "") {
                                 <div class="card">
                                     <div class="card card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Edit Sellers</h3>
+                                            <h3 class="card-title">จัดการผู้ขาย</h3>
                                             </h3>
                                         </div>
                                     </div>
@@ -61,24 +62,28 @@ if ($_SESSION['id_admin'] == "") {
                                         <table class="table table-hover text-nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Fast Name</th>
-                                                    <th>Last Name</th>
+                                                    <th>ลำดับ</th>
+                                                    <th>ชื่อจริง</th>
+                                                    <th>นามสกุล</th>
                                                     <th>Email</th>
-                                                    <th>Gender</th>
-                                                    <th>Phone</th>
-                                                    <th>ID Card</th>
+                                                    <th>เพศ</th>
+                                                    <th>เบอร์โทรศัพท์</th>
+                                                    <th>รหัสบัตรประชาชน</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                $i = 0;
                                                 $select_stmt = $db->prepare('SELECT * FROM sellers');
                                                 $select_stmt->execute();
 
                                                 while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                    $i = $i+1;
                                                 ?>
                                                     <tr>
-                                                        <td><?php echo $row['fastname']; ?></td>
+                                                        <td><?php echo $i ?></td>
+                                                        <td><?php echo $row['firstname']; ?></td>
                                                         <td><?php echo $row['lastname']; ?></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['gender']; ?></td>

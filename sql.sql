@@ -1,12 +1,13 @@
 CREATE TABLE users (
 	id_user Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	fastname varchar(255) NOT NULL,
+	firstname varchar(255) NOT NULL,
     lastname varchar(255) NOT NULL,
     phone varchar(10) NOT NULL,
     gender varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
     role varchar(255) NOT NULL DEFAULT 'user'
+    image varchar(255) NOT NULL DEFAULT 'proflie.jpg'
     ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
@@ -74,6 +75,14 @@ CREATE TABLE promotion (
     
     ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+CREATE TABLE categorys (
+	id_categorys Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    namecategory varchar(255) NOT NULL,
+    imgUrl varchar(255) NOT NULL,
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 CREATE TABLE actionclickuser (
 	id_actionclickuser Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_user Int(11) NOT NULL,
@@ -81,3 +90,69 @@ CREATE TABLE actionclickuser (
     regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
     
     ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE area (
+	id_area Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_seller Int(11) NOT NULL DEFAULT 0  ,
+    namearea varchar(255) NOT NULL,
+    image varchar(255) NOT NULL,
+    lat varchar(255) NOT NULL,
+    lng varchar(255) NOT NULL,
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE reserve_area (
+	id_reserve_area Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_seller Int(11) NOT NULL ,
+    id_area Int(11) NOT NULL,
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE reports (
+	id_report Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_user Int(255) ,
+    message varchar(255) NOT NULL,
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE reserve_area (
+	id_reserve_area Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_seller Int(11) ,
+    id_area Int(11) ,
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE chart (
+	id_chart Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    message varchar(255), 
+    id_user Int(11) ,
+    id_seller Int(11) ,
+    status varchar(255),
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE chatmanager (
+	id_chatmanager Int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    message varchar(255), 
+    manager Int(11) DEFAULT '1' ,
+    id_seller Int(11) ,
+    status varchar(255),
+    regdate timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    
+
+    ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+root
+?BnG]A7c/<r7seJn

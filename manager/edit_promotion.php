@@ -1,5 +1,5 @@
 <?php
-require_once('./components/connection.php');
+require_once('../connection.php');
 session_start();
 
 if ($_SESSION['id_manager'] == "") {

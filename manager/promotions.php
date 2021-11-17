@@ -1,9 +1,10 @@
 <?php
-require_once('./components/connection.php');
+require_once('../connection.php');
 session_start();
+ error_reporting(0);
 
-if ($_SESSION['id_manager'] == "") {
-    header("location: signin.php");
+if (!$_SESSION['id_manager'] ) {
+    header("location: loginManager.php");
 } else {
 
     if (isset($_REQUEST['delete_id'])) {
@@ -31,7 +32,7 @@ if ($_SESSION['id_manager'] == "") {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Promotions</title>
+        <title>แก้ไขข่าวสารโปรโมชั่น</title>
         
     </head>
 
@@ -44,7 +45,7 @@ if ($_SESSION['id_manager'] == "") {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Edit Promotions Page</h1>
+                                <h1 class="m-0">หน้าแก้ไขข่าวสารโปรโมชั่นบนหน้าเว็บ</h1>
                                 <hr />
                             </div>
                         </div>
@@ -53,7 +54,7 @@ if ($_SESSION['id_manager'] == "") {
                                 <div class="card">
                                     <div class="card card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Edit Promotions</h3>
+                                            <h3 class="card-title">แก้ไขข่าวสารโปรโมชั่น</h3>
                                             </h3>
                                         </div>
                                     </div>
@@ -61,9 +62,9 @@ if ($_SESSION['id_manager'] == "") {
                                         <table class="table table-hover text-nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>imgUrl</th>
-                                                    <th>Date</th>
+                                                    <th>ลำดับ</th>
+                                                    <th>รูปภาพโปรโมชั่น</th>
+                                                    <th>วันที่ลงโปรโมโมชั่น</th>
                                                     
                                                 </tr>
                                             </thead>
@@ -78,7 +79,7 @@ if ($_SESSION['id_manager'] == "") {
                                                         <td><?php echo $row['id_promotion']; ?></td>
                                                         <td><img src="../upload/promotion/<?php echo $row['imgUrl']; ?>" width="40px" height="40px" alt=""></td>
                                                         <td><?php echo $row['regdate']; ?></td>
-                                                        <td><a href="edit_promotion.php?update_id=<?php echo $row['id_promotion']; ?>" class="btn btn-warning">Edit</a></td>
+                                                        <td><a href="edit_promotion.php?update_id=<?php echo $row['id_promotion']; ?>" class="btn btn-warning">แก้ไข</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>

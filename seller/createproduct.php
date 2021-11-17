@@ -1,5 +1,6 @@
 <?php
 include_once('../functions.php');
+require_once('connection.php');
 $userdata = new DB_con();
 session_start();
 
@@ -22,33 +23,33 @@ if ($_SESSION['id_seller'] == "") {
         $size = $_FILES['imgUrl']['size'];
         $temp = $_FILES['imgUrl']['tmp_name'];
 
-        $path = "../upload/" . $imgUrl; // set upload folder path
+        $path = "../upload/product/" . $imgUrl; // set upload folder path
 
         if (empty($name)) {
             $errorMsg = "Please Enter name";
         } else if (empty($imgUrl)) {
-            $errorMsg = "please Select Image";
+            $errorMsg = "กรุณาอัพโหลดรูปภาพของท่าน";
         } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png" || $type == "image/gif") {
             if (!file_exists($path)) { // check file not exist in your upload folder path
                 if ($size < 5000000) { // check file size 5MB
-                    move_uploaded_file($temp, '../upload/' . $imgUrl); // move upload file temperory directory to your upload folder
+                    move_uploaded_file($temp, '../upload/product/'.$imgUrl); // move upload file temperory directory to your upload folder
                 } else {
-                    $errorMsg = "Your file too large please upload 5MB size"; // error message file size larger than 5mb
+                    $errorMsg = "กรุณาอัพโหลดรูปภาพที่มีขนาดไม่เกิน 5MB"; // error message file size larger than 5mb
                 }
             } else {
-                $errorMsg = "File already exists... Check upload filder"; // error message file not exists your upload folder path
+                $errorMsg = "มีชื่อภาพนี้อยู่ในระบบเเล้ว กรุณาเปลี่ยนชื่อ !!!!"; // error message file not exists your upload folder path
             }
         } else {
-            $errorMsg = "Upload JPG, JPEG, PNG & GIF file formate...";
+            $errorMsg = "กรุณาอัพโหลดภาพที่นามสกุล JPG, JPEG, PNG & G...";
         }
 
         if (!isset($errorMsg)) {
-            $sql = $userdata->createproducts($id_shop, $name, $description, $price, $category,$imgUrl);
+            $sql = $userdata->createproducts($id_shop, $name, $description, $price, $category, $imgUrl);
             if ($sql) {
-                echo "<script>alert('Cearte Successfull')</script>";
+                echo "<script>alert('เพิ่มสินค้าสำเร็จ')</script>";
                 echo "<script>window.location.href='../seller/dashboardseller.php'</script>";
             } else {
-                echo "<script>alert('Something went wrong! Please try again...')</script>";
+                echo "<script>alert('มีปัญหาโปรดลองอีกครั้ง...')</script>";
                 echo "<script>window.location.href='../seller/createproduct.php'</script>";
             }
         }
@@ -61,7 +62,7 @@ if ($_SESSION['id_seller'] == "") {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Create Product</title>
+        <title>เพิ่มสินค้า</title>
     </head>
 
     <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -73,8 +74,8 @@ if ($_SESSION['id_seller'] == "") {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Create Product Page</h1>
-                                <hr/>
+                                <h1 class="m-0">หน้าเพิ่มสินค้า</h1>
+                                <hr />
                             </div>
                         </div>
                         <div class="row">
@@ -82,7 +83,7 @@ if ($_SESSION['id_seller'] == "") {
                                 <div class="card">
                                     <div class="card card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Craete Products</h3>
+                                            <h3 class="card-title">เพิ่มสินค้า</h3>
                                             </h3>
                                         </div>
                                     </div>
@@ -91,28 +92,40 @@ if ($_SESSION['id_seller'] == "") {
 
                                             <div class="form-group">
 
-                                                <label for="name">Name Products</label>
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Name Product">
+                                                <label for="name">ชื่อสินค้าของคุณ</label>
+                                               <input type="name" class="form-control form-control-lg" id='name' name="name" onblur="checkname(this.value)">
+                                                <br /> <span id="nameavailable"></span>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="description">Description Products</label>
+                                                <label for="description">รายละเอียดสินค้าของคุณ</label>
                                                 <textarea id="description" name="description" class="form-control" rows="4"></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label for="category">Category Product</label>
-                                                <input type="text" class="form-control" id="category" name="category" placeholder="category Product">
+                                                <label for="category">ประเภทสินค้าของคุณ</label>
+                                                <br />
+                                                <select class="form-select" type="category" id='category' name="category">
+                                                    <?php
+                                                    $select_stmt = $db->prepare("SELECT * FROM subcategories ");
+                                                    $select_stmt->execute();
+
+                                                    while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                        <option value="<?php echo $row['id_subcategory'] ?>"><?php echo $row['namesubcategory'] ?></option>
+                                                    <?php } ?>
+
+                                                </select>
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="price">Price</label>
+                                                <label for="price">ราคา</label>
                                                 <input type="number" class="form-control" id="price" name="price" placeholder="Price Product">
                                             </div>
                                             <div class="form-group">
-                                                <label for="imgUrl">Image Product</label>
+                                                <label for="imgUrl">รูปภาพสินค้าของคุณ</label>
                                                 <div class="input-group">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="imgUrl" name="imgUrl">
-                                                        <label class="custom-file-label" for="imgUrl name=" imgUrl">Choose file</label>
+                                                        <input type="file" class="custom-file-input" for="imgUrl" name=" imgUrl">
+                                                        <label class="custom-file-label" for="imgUrl" name=" imgUrl">Choose file</label>
                                                     </div>
 
                                                 </div>
@@ -121,7 +134,7 @@ if ($_SESSION['id_seller'] == "") {
                                         <!-- /.card-body -->
                                         <div class="form-group">
                                             <div class="card-footer">
-                                                <button type="submit" name="submit" class="btn btn-primary ">Create Product</button>
+                                                <button type="submit" name="submit" class="btn btn-primary ">เพิ่มสินค้า</button>
                                             </div>
                                         </div>
                                         <div class="container text-center">
@@ -145,6 +158,22 @@ if ($_SESSION['id_seller'] == "") {
                             </div><!-- /.row -->
                         </div><!-- /.container-fluid -->
                     </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script>
+            function checkname(val) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'checknameproduct.php',
+                    data: 'name=' + val,
+                    success: function(data) {
+                        $('#nameavailable').html(data);
+                    }
+                });
+            }
+        </script>
 
     </body>
 

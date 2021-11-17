@@ -1,8 +1,10 @@
 <?php
 require_once('../connection.php');
 session_start();
-if ($_SESSION['id_admin'] == "") {
-    header("location: signin.php");
+ error_reporting(0);
+
+if (!$_SESSION['id_admin'] ) {
+    header("location: loginAdmin.php");
 } else {
 ?>
     <!DOCTYPE html>

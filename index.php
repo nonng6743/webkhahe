@@ -1,6 +1,11 @@
 <?php
-require_once('connection.php');
-
+require_once('./connection.php');
+session_start();
+error_reporting(0);
+$id_user = $_SESSION['id_user'];
+if (!$id_user) {
+    $id_user = 0;
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,19 +16,22 @@ require_once('connection.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Kheha Shop</title>
+    <title>ตลาดเคหะคลองหก</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 </head>
 
 <body>
-    <?php include './components/navbars.php' ?>
+    <?php include './components/navbar.php' ?>
     <div class="container">
         <br />
 
         <div class="alert alert-primary" role="alert">
             โปรโมชั่นสินค้า
         </div>
+           
+       
+            
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -34,7 +42,7 @@ require_once('connection.php');
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="./upload/img/thumb-1920-633288.png" class="d-block w-100">
+                    <img src="./upload/promotion/home.jpg" class="d-block w-100">
                 </div>
                 <?php
                 $stmt = $db->prepare('select * from promotion');
@@ -53,62 +61,278 @@ require_once('connection.php');
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <span class="visually-hidden">ก่อนหน้า</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <span class="visually-hidden">ถัดไป</span>
             </button>
         </div>
 
         <hr />
         <div class="alert alert-primary" role="alert">
-            หมวดหมูสินค้า
+            หมวดหมู่สินค้า
         </div>
-        <div class="container">
+       <div class="container">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=อาหารสด"><img src="./upload/img/ARTICLE.jpg" width="40px" height="40px"></a> อาหารสด</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=อาหารสำเร็จรูป"><img src="./upload/img/อาหารสำเร็จรูป.jpg" width="40px" height="40px"></a> อาหารสำเร็จรูป</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=อาหารหวาน"><img src="./upload/img/อาหารหวาน.jpg" width="40px" height="40px"></a> อาหารหวาน</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=เครื่องดื่ม"><img src="./upload/img/เครื่องดื่ม.jpg" width="40px" height="40px"></a> เครื่องดื่ม</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=สินค้าจิปาถะ"><img src="./upload/img/สินค้าจิปาถะ.jpg" width="40px" height="40px"></a> สินค้าจิปาถะ</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=เครื่องแต่งกาย"><img src="./upload/img/เสื้อผ้า.jpg" width="40px" height="40px"></a> เครื่องแต่งกาย</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=สินค้ามือสอง"><img src="./upload/img/สินค้ามือสอง.jpg" width="40px" height="40px"></a> สินค้ามือสอง</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=ผลไม้"><img src="./upload/img/ผลไม้.jpg" width="40px" height="40px"></a> ผลไม้</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=ผัก"><img src="./upload/img/ผัก.jpg" width="40px" height="40px"></a> ผัก</div>
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light"><a href="productCategory.php?category_id=อาหารแห้ง"><img src="./upload/img/อาหารแห้ง.jpg" width="40px" height="40px"></a> อาหารแห้ง</div>
-                </div>
+                <?php
+                $select_stmt = $db->prepare('SELECT * FROM categories');
+                $select_stmt->execute();
+
+                while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                ?>
+                    <div class="col">
+                        <div class="p-3 border bg-light"><a href="productCategory.php?category_id=<?php echo $row['namecategory'] ?>"><img src="./upload/categories/<?php echo $row['image'] ?>" width="40px" height="40px"></a> <?php echo $row['namecategory'] ?></div>
+                    </div>
+                <?php } ?>
             </div>
             <hr />
+             <div class="alert alert-primary" role="alert">
+               โปรโมชั่นจากร้านค้า
+            </div>
+            <div class="container mt-5">
+                <div class="row">
+                    <?php
+                    $numperpage = 3;
+                    $countsql = $db->prepare("SELECT COUNT(id_promotionseller) from promotionseller");
+                    $countsql->execute();
+                    $rowe = $countsql->fetch();
+                    $numrecords = $rowe[0];
+
+                    $numlinke = ceil($numrecords / $numperpage);
+                    $page = $_GET['promotion'];
+                    if (!$page) $page = 0;
+                    $start = $page * $numperpage;
+
+                    $select_stmt = $db->prepare("SELECT * FROM promotionseller WHERE status = 'yes' ORDER BY regdate DESC limit  $start,$numperpage");
+                    $select_stmt->execute();
+
+                    while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                        
+
+                    ?>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="text-center">
+                                    <br />
+                                     <img src="./upload/promotionseller/<?php echo $row['image']; ?>" width="200px" height="200px" class="card-img-top" alt="...">
+                                </div>
+                                <div class="text-center">
+                                    <br />
+                                     <p class="card-text"><?php echo $row['detailpromotion'] ?></p>
+                                     <?php 
+                                    $id_seller = $row['id_seller'];
+                                    $select_shop = $db->prepare("SELECT * FROM shops WHERE id_seller = '$id_seller'");
+                                    $select_shop->execute();
+                                    $rowshop = $select_shop->fetch(PDO::FETCH_ASSOC);
+                                    
+                                    
+                                    ?>
+                                     <p>โปรโมชั่นจากร้านค้า :
+                                     <a href="shopproduct.php?shop_id=<?php echo $rowshop['id_shop']; ?>" ><?php echo $rowshop['nameshop']; ?></a>
+                                    </p>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+
+            </div>
+            <br/>
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-auto">
+                        <nav aria-label>
+                        <ul class="pagination pagination-lg">
+
+                                <?php
+                                for ($i = 0; $i <= $numlinke; $i++) {
+                                    $y = $i + 1;
+                                    echo '<li class="page-item " aria-current="page"><a class="page-link"  href="index.php?promotion=' . $i . '">' . $y . '</a></li>';
+                                }
+                                ?>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        
+              <hr />
+            
+            
 
 
             <div class="alert alert-primary" role="alert">
                 สินค้าเเนะนำ
             </div>
-            <?php include './components/page/products/products.php' ?>
+            <div class="container mt-5">
+                <div class="row">
+                    <?php
+                    $select_stmts = $db->prepare("SELECT * FROM products ");
+                    $select_stmts->execute();
+                    $viewarray = array();
+                    $id_productarray = array();
+                    while ($row = $select_stmts->fetch(PDO::FETCH_ASSOC)) {
+                        $id_user = $_SESSION['id_user'];
+                        if (!$id_user) {
+                            $id_user = 0;
+                        }
 
+                        $product_id = $row['id_products'];
+                        $select_view = $db->prepare('SELECT COUNT(id_products) AS view FROM actionclickuser WHERE id_products= :id AND id_user = :idu');
+                        $select_view->bindParam(":id", $product_id);
+                        $select_view->bindParam(":idu", $id_user);
+                        $select_view->execute();
+                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+                        $id_productarray[] = $row['id_products'];
+                        $viewarray[] = $view['view'];
+                    }
+                    $maxview = max($viewarray);
+                    $key = array_search($maxview, $viewarray);
+                    $keys = $id_productarray[$key];
+                    $select_stmts = $db->prepare("SELECT * FROM products WHERE id_products = :ukey");
+                    $select_stmts->bindParam(":ukey", $keys);
+                    $select_stmts->execute();
+                    $rowss = $select_stmts->fetch(PDO::FETCH_ASSOC);
+                    extract($rowss);
+                     
+                    $numperpage = 6;
+                    $countsql = $db->prepare("SELECT COUNT(id_products) from products");
+                    $countsql->execute();
+                    $rowe = $countsql->fetch();
+                    $numrecords = $rowe[0];
 
+                    $numlinke = ceil($numrecords / $numperpage);
+                    $page = $_GET['start'];
+                    if (!$page) $page = 0;
+                   
 
+                    $select_stmt = $db->prepare("SELECT * FROM products WHERE id_subcategory = '$id_subcategory' limit $numperpage");
+                    $select_stmt->execute();
 
+                    while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                        $product_id = $row['id_products'];
+                        $select_view = $db->prepare('SELECT COUNT(id_products) AS view FROM actionclickuser WHERE id_products= :id');
+                        $select_view->bindParam(":id", $product_id);
+                        $select_view->execute();
+                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+
+                    ?>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="text-center">
+                                    <br />
+                                    <img src="./upload/product/<?php echo $row['image']; ?>" width="200px" height="200px">
+                                </div>
+                                <div class="text-center">
+                                    <br />
+                                    <h4><?php $name = $row['nameproduct'];
+                                        echo  mb_substr("$name",0,20,"UTF-8")."..."; ?></h4>
+                                    <h6><?php
+                                        $description = $row['detail'];
+                                        echo  mb_substr("$description",0,20,"UTF-8")."...";?></h5>
+                                    <span class="text-success">
+                                        <h5>ราคา  <?php $price =  $row['price'];
+                                                    $prices = intval($price);
+                                                    echo number_format($prices,2); ?> บาท</h6>
+                                    </span>
+                                    <h6>มีผู้เข้าชมเเล้ว: <?php echo $view['view']; ?> </h6>
+                                    
+                                    <a href="product.php?product_id=<?php echo $row['id_products']; ?>" class="btn btn-primary">ดูรายละเอียดเพิ่มเติม</a>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+
+            </div>
+            <br />
+            
+
+            
+        </div>
+            <div class="alert alert-primary" role="alert">
+               สินค้าทั้งหมด
+            </div>
+            <div class="container mt-5">
+                <div class="row">
+                    <?php
+                    $numperpage = 20;
+                    $countsql = $db->prepare("SELECT COUNT(id_products) from products");
+                    $countsql->execute();
+                    $rowe = $countsql->fetch();
+                    $numrecords = $rowe[0];
+
+                    $numlinke = ceil($numrecords / $numperpage);
+                    $page = $_GET['start'];
+                    if (!$page) $page = 0;
+                    $start = $page * $numperpage;
+
+                    $select_stmt = $db->prepare("SELECT * FROM products ORDER BY regdate DESC limit  $start,$numperpage");
+                    $select_stmt->execute();
+
+                    while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                        $product_id = $row['id_products'];
+                        $select_view = $db->prepare('SELECT COUNT(id_products) AS view FROM actionclickuser WHERE id_products= :id');
+                        $select_view->bindParam(":id", $product_id);
+                        $select_view->execute();
+                        $view = $select_view->fetch(PDO::FETCH_ASSOC);
+
+                    ?>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="text-center">
+                                    <br />
+                                    <img src="./upload/product/<?php echo $row['image']; ?>" width="200px" height="200px">
+                                </div>
+                                <div class="text-center">
+                                    <br />
+                                    <h4><?php $name = $row['nameproduct'];
+                                        echo  mb_substr("$name",0,20,"UTF-8")."..."; ?></h4>
+                                    <h6><?php
+                                        $description = $row['detail'];
+                                        echo  mb_substr("$description",0,20,"UTF-8")."...";?></h6>
+                                    <span class="text-success">
+                                        <h5>ราคา  <?php $price =  $row['price'];
+                                                    $prices = intval($price);
+                                                    echo number_format($prices,2); ?> บาท</h5>
+                                    </span>
+                                    <h6>มีผู้เข้าชมเเล้ว: <?php echo $view['view']; ?> </h6>
+                                    
+                                    <a href="product.php?product_id=<?php echo $row['id_products']; ?>" class="btn btn-primary">ดูรายละเอียดเพิ่มเติม</a>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+
+            </div>
+            <br/>
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-auto">
+                        <nav aria-label>
+                        <ul class="pagination pagination-lg">
+
+                                <?php
+                                for ($i = 0; $i <= $numlinke; $i++) {
+                                    $y = $i + 1;
+                                    echo '<li class="page-item " aria-current="page"><a class="page-link"  href="index.php?start=' . $i . '">' . $y . '</a></li>';
+                                }
+                                ?>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
 
 

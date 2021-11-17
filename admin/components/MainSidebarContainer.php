@@ -37,7 +37,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="../../../projectweb/admin/components/logout.php" class="btn btn-danger">Logout</a>
+                <a href="./components/logout.php" class="btn btn-danger">Logout</a>
             </li>
 
         </ul>
@@ -54,76 +54,66 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="../seller/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="../upload/Profile-Transparent.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="dashboard.php" class="d-block"><?php echo $_SESSION['fastname'] ?> <?php echo $_SESSION['lastname'] ?></a>
+                    <a href="dashboard.php" class="d-block"><?php echo $_SESSION['firstname'] ?> <?php echo $_SESSION['lastname'] ?></a>
 
                 </div>
             </div>
 
-            <!-- SidebarSearch Form -->
-            <div class="form-inline">
-                <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-sidebar">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                     <li class="nav-item menu-open">
-                        <a href="dashboardseller.php" class="nav-link active">
+                        <a href="./dashboard.php" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
                             </p>
                         </a>
                     </li>
-                    <li class="nav-header">Edits</li>
+                    <li class="nav-header">เเก้ไข</li>
                     <li class="nav-item">
-                        <a href="editshops.php" class="nav-link">
+                        <a href="./editshops.php" class="nav-link">
                         <ion-icon  class="nav-icon fas " name="bag-check-sharp"></ion-icon>
                             <p>
-                                Shop
+                                ร้านค้าทั้งหมด
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="editproducts.php" class="nav-link">
+                        <a href="./editproducts.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                                Products
+                                สินค้าทั้งหมด
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="editsellers.php" class="nav-link">
+                        <a href="./editsellers.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                               Seller
+                               ผู้ขายทั้งหมด
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="editusers.php" class="nav-link">
+                        <a href="./editusers.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                               User
+                               สมาชิกทั้งหมด
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="editmanagers.php" class="nav-link">
+                        <a href="./editmanagers.php" class="nav-link">
                         <i class="nav-icon fas fa-tree"></i>
                             <p>
-                                Manager
+                                ผู้จัดการ
                             </p>
                         </a>
                     </li>

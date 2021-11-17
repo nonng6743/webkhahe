@@ -1,9 +1,10 @@
 <?php
-require_once('../../projectweb/connection.php');
+require_once('../connection.php');
 session_start();
+error_reporting(0);
 
-if ($_SESSION['id_admin'] == "") {
-    header("location: signin.php");
+if (!$_SESSION['id_admin']) {
+    header("location: loginAdmin.php");
 } else {
 
     if (isset($_REQUEST['delete_id'])) {
@@ -31,7 +32,7 @@ if ($_SESSION['id_admin'] == "") {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Product</title>
+        <title>หน้าจัดการสินค้า</title>
 
     </head>
 
@@ -44,7 +45,7 @@ if ($_SESSION['id_admin'] == "") {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Edit Product Page</h1>
+                                <h1 class="m-0">หน้าจัดการสินค้าทั้งหมด</h1>
                                 <hr />
                             </div>
                         </div>
@@ -53,7 +54,7 @@ if ($_SESSION['id_admin'] == "") {
                                 <div class="card">
                                     <div class="card card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Edit Products</h3>
+                                            <h3 class="card-title">จัดการสินค้าทั้งหมด</h3>
                                             </h3>
                                         </div>
                                     </div>
@@ -61,30 +62,44 @@ if ($_SESSION['id_admin'] == "") {
                                         <table class="table table-hover text-nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>ID Shop</th>
-                                                    <th>Date</th>
-                                                    <th>Price</th>
-                                                    <th>Category</th>
-                                                    <th>imgUrl</th>
+                                                    <th>ลำดับ</th>
+                                                    <th>ร้านค้า</th>
+
+                                                    <th>ประเภท</th>
+                                                    <th>รูปภาพสินค้า</th>
+                                                    <th>ชื่อสินค้า</th>
+                                                    <th>ราคา</th>
 
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                $i = 0;
                                                 $select_stmt = $db->prepare('SELECT * FROM products');
                                                 $select_stmt->execute();
 
                                                 while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                    $i = $i + 1;
                                                 ?>
                                                     <tr>
-                                                        <td><?php echo $row['name']; ?></td>
-                                                        <td><?php echo $row['id_shop']; ?></td>
-                                                        <td><?php echo $row['regdate']; ?></td>
+                                                        <td><?php echo $i ?></td>
+
+                                                        <td><?php $id_shop = $row['id_shop'];
+                                                            $select_shop  = $db->prepare("SELECT * FROM shops WHERE id_shop = '$id_shop' ");
+                                                            $select_shop->execute();
+                                                            $rowshop  = $select_shop->fetch(PDO::FETCH_ASSOC);
+                                                            echo $rowshop['nameshop'];
+                                                            ?></td>
+
+                                                        <td><?php $id_subcategory = $row['id_subcategory'];
+                                                            $select_subcategory  = $db->prepare("SELECT * FROM subcategories WHERE id_subcategory = '$id_subcategory' ");
+                                                            $select_subcategory->execute();
+                                                            $rowsubcategory  = $select_subcategory->fetch(PDO::FETCH_ASSOC);
+                                                            echo $rowsubcategory['namesubcategory']; ?></td>
+                                                        <td><img src="../upload/product/<?php echo $row['image']; ?>" width="40px" height="40px" alt=""></td>
+                                                        <td><?php echo $row['nameproduct']; ?></td>
                                                         <td><?php echo $row['price']; ?></td>
-                                                        <td><?php echo $row['category']; ?></td>
-                                                        <td><img src="../upload/<?php echo $row['imgUrl']; ?>" width="40px" height="40px" alt=""></td>
                                                         <td><a href="?delete_id=<?php echo $row['id_products']; ?>" class="btn btn-danger">Delete</a></td>
 
                                                     </tr>

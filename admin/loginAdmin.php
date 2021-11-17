@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
 
     if ($num > 0) {
         $_SESSION['id_admin'] = $num['id_admin'];
-        $_SESSION['fastname'] = $num['fastname'];
+        $_SESSION['firstname'] = $num['firstname'];
         $_SESSION['lastname'] = $num['lastname'];
         $_SESSION['role'] = $num['role'];
         echo "<script>alert('Login Successfull')</script>";
@@ -34,7 +34,7 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>หน้าเข้าสู่ระบบ</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -45,19 +45,18 @@ if (isset($_POST['login'])) {
 </head>
 
 <body class="hold-transition login-page">
-    <?php include './components/Navbar.php' ?>
     <div class="hold-transition login-page">
         <div class="login-box">
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="./" class="h1"><b>Kheha</b> K.6</a>
+                    <a href="../" class="h1"><b>ตลาดเคหะ K.6</b></a>
                 </div>
                 <div class="card-body">
-                    <p class="login-box-msg">เข้าสู่ระบบ</p>
+                    <p class="login-box-msg">หน้าเข้าสู่ระบบแอดมิน</p>
 
                     <form method="post">
                         <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Email" id='email' name="email">
+                            <input type="email" class="form-control" placeholder="อีเมล" id='email' name="email">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
@@ -65,7 +64,7 @@ if (isset($_POST['login'])) {
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control" placeholder="Password" id='password' name="password">
+                            <input type="password" class="form-control" placeholder="พาสเวิร์ด" id='password' name="password">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -73,8 +72,11 @@ if (isset($_POST['login'])) {
                             </div>
                         </div>
                         <div class="social-auth-links text-center mt-2 mb-3">
-                            <button type="submit" name="login" class="btn btn-primary btn-block">Sign In</button>
-                        
+                            <button type="submit" name="login" class="btn btn-primary btn-block">เข้าสู่ระบบสำหรับแอดมิน</button>
+                            <br/>
+                            <a href="../" >
+                                 กลับไปหน้าเเรก
+                            </a>
                         </div>
                     </form>
 

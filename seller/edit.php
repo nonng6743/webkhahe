@@ -1,79 +1,33 @@
 <?php
+include_once('../functions.php');
 require_once('connection.php');
+$userdata = new DB_con();
 session_start();
 
 if ($_SESSION['id_seller'] == "") {
     header("location: signin.php");
 } else {
+    $id_seller = $_SESSION['id_seller'];
+    $result = $userdata->quertyshops($id_seller);
+    $num = mysqli_fetch_array($result);
+    $id_shop = $num['id_shop'];
 
-    if (isset($_REQUEST['update_id'])) {
-        try {
-            $id_products = $_REQUEST['update_id'];
-            $select_stmt = $db->prepare('SELECT * FROM products WHERE id_products = :id');
-            $select_stmt->bindParam(":id", $id_products);
-            $select_stmt->execute();
-            $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
-            extract($row);
-        } catch (PDOException $e) {
-            $e->getMessage();
-        }
+    if (isset($_REQUEST['delete_id'])) {
+        $id = $_REQUEST['delete_id'];
+
+        $select_stmt = $db->prepare('SELECT * FROM products WHERE id_products = :id');
+        $select_stmt->bindParam(':id', $id);
+        $select_stmt->execute();
+        $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+        unlink("../upload/product/".$row['image']); // unlin functoin permanently remove your file
+
+        // delete an original record from db
+        $delete_stmt = $db->prepare('DELETE FROM products WHERE id_products = :id');
+        $delete_stmt->bindParam(':id', $id);
+        $delete_stmt->execute();
+
+        header("Location: editproducts.php");
     }
-
-    if (isset($_REQUEST['btn_update'])) {
-        try {
-
-            $name = $_REQUEST['name'];
-            $description = $_REQUEST['description'];
-            $category = $_REQUEST['category'];
-            $price = $_REQUEST['price'];
-
-            $imgUrl = $_FILES['imgUrl']['name'];
-            $type = $_FILES['imgUrl']['type'];
-            $size = $_FILES['imgUrl']['size'];
-            $temp = $_FILES['imgUrl']['tmp_name'];
-
-            $path = "../upload/".$imgUrl;
-            $directory = "../upload/"; // set uplaod folder path for upadte time previos file remove and new file upload for next use
-
-            if ($imgUrl) {
-                if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png" || $type == "image/gif") {
-                    if (!file_exists($path)) { // check file not exist in your upload folder path
-                        if ($size < 5000000) { // check file size 5MB
-                            unlink($directory.$row['imgUrl']); // unlink functoin remove previos file
-                            move_uploaded_file($temp, '../upload/'.$imgUrl); // move upload file temperory directory to your upload folder
-                        } else {
-                            $errorMsg = "Your file to large please upload 5MB size";
-                        }
-                    } else {
-                        $errorMsg = "File already exists... Check upload folder";
-                    }
-                } else {
-                    $errorMsg = "Upload JPG, JPEG, PNG & GIF formats...";
-                }
-            } else {
-                $imgUrl = $row['imgUrl']; // if you not select new image than previos image same it is it.
-            }
-
-            if (!isset($errorMsg)) {
-                $update_stmt = $db->prepare("UPDATE products SET name = :name_up, description= :description_up, category= :category_up, price=:price_up, imgUrl = :file_up WHERE id_products = :id");
-                $update_stmt->bindParam(':name_up', $name);
-                $update_stmt->bindParam(':description_up', $description);
-                $update_stmt->bindParam(':category_up', $category);
-                $update_stmt->bindParam(':price_up', $price);
-                $update_stmt->bindParam(':file_up', $imgUrl);
-                $update_stmt->bindParam(':id', $id_products);
-
-                if ($update_stmt->execute()) {
-                    $updateMsg = "File update successfully...";
-                    header("refresh:2;editproducts.php");
-                }
-            }
-            
-        } catch(PDOException $e) {
-            $e->getMessage();
-        }
-    }
-
 
 ?>
     <!DOCTYPE html>
@@ -83,8 +37,8 @@ if ($_SESSION['id_seller'] == "") {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Product</title>
-
+        <title>แก้ไขสินค้า</title>
+        
     </head>
 
     <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -96,7 +50,7 @@ if ($_SESSION['id_seller'] == "") {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Edit Product Page</h1>
+                                <h1 class="m-0">หน้าแก้ไขสินค้า</h1>
                                 <hr />
                             </div>
                         </div>
@@ -105,72 +59,49 @@ if ($_SESSION['id_seller'] == "") {
                                 <div class="card">
                                     <div class="card card-primary">
                                         <div class="card-header">
-                                            <h3 class="card-title">Craete Products</h3>
+                                            <h3 class="card-title">แก้ไขสินค้า</h3>
+                                            </h3>
                                         </div>
                                     </div>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                        <div class="card-body">
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ชื่อสินค้า</th>
+                                                    
+                                                    <th>ราคา</th>
+                                                    
+                                                    <th>รูปภาพ</th>
+                                                    <th>รายละเอียด</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $select_stmt = $db->prepare("SELECT * FROM products WHERE id_shop = $id_shop");
+                                                $select_stmt->execute();
 
-                                            <div class="form-group">
-                                                <label for="name">Name Products</label>
-                                                <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>">
-                                            </div>
+                                                while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $row['nameproduct']; ?></td>
+                                                        
+                                                        <td><?php echo $row['price']; ?></td>
+                                                        
+                                                        <td><img src="../upload/product/<?php echo $row['image']; ?>" width="40px" height="40px" alt=""></td>
+                                                        <td><?php echo $row['detail']; ?></td>
+                                                        <td><a href="edit.php?update_id=<?php echo $row['id_products']; ?>" class="btn btn-warning">แก้ไข</a></td>
+                                                        <td><a href="?delete_id=<?php echo $row['id_products']; ?>" class="btn btn-danger">ลบ</a></td>
 
-                                            <div class="form-group">
-                                                <label for="description">Description Products</label>
-                                                <textarea id="description" name="description" class="form-control" rows="4"><?php echo $description; ?></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="category">Category Product</label>
-                                                <input type="text" class="form-control" id="category" name="category" value="<?php echo $category; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="price">Price</label>
-                                                <input type="number" class="form-control" id="price" name="price" value="<?php echo $price; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="imgUrl">Image Product</label>
-                                                <div class="input-group">
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="imgUrl" name="imgUrl" value="<?php echo $imgUrl; ?>">
-                                                        <label class="custom-file-label" for="imgUrl name="imgUrl">Choose file</label>
-                                                    </div>
-                                                </div>
-                                                <hr/>
-                                                <p>
-                                                        <img src="../upload/<?php echo $imgUrl; ?>" height="100" width="100" alt="">
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <!-- /.card-body -->
-                                        <div class="form-group">
-                                            <div class="card-footer">
-                                                <button type="submit" name="btn_update" class="btn btn-success" >Update</button>
-                                                <a href="editproducts.php" class="btn btn-danger">Cancel</a>
-                                            </div>
-                                        </div>
-                                        <div class="container text-center">
-                                            <?php
-                                            if (isset($errorMsg)) {
-                                            ?>
-                                                <div class="alert alert-danger">
-                                                    <strong><?php echo $errorMsg; ?></strong>
-                                                </div>
-                                            <?php } ?>
-
-                                            <?php
-                                            if (isset($insertMsg)) {
-                                            ?>
-                                                <div class="alert alert-success">
-                                                    <strong><?php echo $insertMsg; ?></strong>
-                                                </div>
-                                            <?php } ?>
-                                    </form>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div><!-- /.row -->
                         </div><!-- /.container-fluid -->
                     </div>
-
+                    
     </body>
 
     </html>
