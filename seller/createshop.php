@@ -11,10 +11,7 @@ $num = mysqli_num_rows($sqlidseller);
 
 if ($_SESSION['id_seller'] == "") {
     header("location: signin.php");
-}else if($num > 0){
-    echo "<script>alert('มีร้านค้าอยู่ในบัญชีเเล้ว')</script>";
-    echo "<script>window.location.href='dashboardseller.php'</script>";
-} 
+}
 else {
         
 

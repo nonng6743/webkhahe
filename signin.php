@@ -10,7 +10,12 @@ if (isset($_SESSION['id_user'])) {
 
 if (isset($_REQUEST['btn_login'])) {
     $email = strip_tags($_REQUEST['email']);
-    $password = strip_tags($_REQUEST['password']);
+    $password = strip_tags($_REQUEST['password'])
+    
+    
+    
+    
+    ;
 
     if (empty($email)) {
         $errorMsg[] = "กรุณากรอกอีเมล";

@@ -247,7 +247,7 @@ if (isset($_REQUEST['shop_id'])) {
         }
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN-qkxR31IoRs9DUITGIA1rOiD-r1u2gw&callback=initMap&libraries=&v=weekly" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATSEBp-3BMGJh4j5Cpdk1XrP1Q_kcoOkk&callback=initMap&libraries=&v=weekly" async></script>
     <!-- jQuery -->
     <script src="./seller/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
